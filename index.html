@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- CSS -->
+	<link rel="stylesheet" href="style.css">
+	<!-- Chart.js CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<title>Test - Esig Group</title>
+</head>
+<body>
+
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+            <i class='bx bx-menu' ></i>
+			<span class="text">Esig<b>GROUP</b></span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a href="javascript:void(0);" onclick="showPage('dashboard')">
+                    <i class='bx bx-grid-alt'></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a href="javascript:void(0);" onclick="showPage('tasks')">
+                    <i class='bx bx-list-ul'></i>
+					<span class="text">Tarefas</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+
+		<!-- NAVBAR -->
+		<nav>
+			<form action="#">
+				<div class="form-input">
+                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+					<input type="search">
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a href="#" class="profile">
+				<img src="img/foto.png">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+
+		<!-- MAIN -->
+		<main>
+
+			<!-- DASHBOARD -->
+			<div id="dashboard" class="page active">
+				<div class="head-title">
+					<div class="left">
+						<h1>Olá Fábio,</h1>
+						<ul class="subtitle">
+							<li>
+								<a href="#">Bem-vindo ao seu gestor de tarefas!</a>
+							</li>
+						</ul>
+					</div>
+					<button id="openModalButtonDashboard"><i class='bx bx-plus' ></i>&nbsp Nova Tarefa</button>
+				</div>
+				<ul class="box-info">
+					<li>
+						<span class="text">
+							<h2>4</h2>
+							<p>to do</p>
+						</span>
+						<i class='bx bx-loader-circle'></i>
+					</li>
+					<li>
+						<span class="text">
+							<h2>2</h2>
+							<p>doing</p>
+						</span>
+						<i class='bx bx-terminal'></i>
+					</li>
+					<li>
+						<span class="text">
+							<h2>64</h2>
+							<p>done</p>
+						</span>
+						<i class='bx bx-check-square'></i>
+					</li>
+				</ul>
+				<div id="taskChartContainer">
+					<h3># Tarefas concluídas por dia</h3>
+					<div class="chart-box">
+						<div class="chart-header">
+							<select id="timeRangeSelect">
+								<option value="7">Últimos 7 dias</option>
+								<option value="15" selected>Últimos 15 dias</option>
+								<option value="30">Últimos 30 dias</option>
+								<option value="all">Todos</option>
+							</select>
+						</div>
+						<canvas id="taskChart"></canvas>
+					</div>
+				</div>
+			</div>
+			<!-- DASHBOARD -->
+
+
+			<!-- TAREFAS -->
+			<div id="tasks" class="page">
+				<div class="head-title">
+					<div class="left">
+						<h1>Tarefas</h1>
+						<ul class="subtitle">
+							<li>
+								<a href="javascript:void(0)" onclick="showPage('dashboard')">Dashboard</a> > Tarefas
+							</li>
+						</ul>
+					</div>
+					<button id="openModalButtonTasks"><i class='bx bx-plus' ></i>&nbsp Nova Tarefa</button>
+				</div>
+
+				<div class="table-box">
+					<div class="table-header">
+						<div class="filters">
+							<select id="projectFilter" onchange="filterTable()">
+								<option value="">Projetos</option>
+								<option value="Projeto 1">Projeto 1</option>
+								<option value="Projeto 2">Projeto 2</option>
+							</select>
+						
+							<select id="statusFilter" onchange="filterTable()">
+								<option value="">Status</option>
+								<option value="done">Done</option>
+								<option value="to do">To do</option>
+								<option value="doing">Doing</option>
+							</select>
+						
+							<select id="priorityFilter" onchange="filterTable()">
+								<option value="">Todas Prioridades</option>
+								<option value="low">Baixa</option>
+								<option value="medium">Média</option>
+								<option value="high">Alta</option>
+							</select>
+						
+							<select id="dateFilter" onchange="filterTable()">
+								<option value="">Sem filtro</option>
+								<option value="30">Últimos 30 dias</option>
+								<option value="15">Últimos 15 dias</option>
+								<option value="7">Últimos 7 dias</option>
+								<option value="1">Ontem</option>
+							</select>
+						</div>
+					</div>
+				
+				
+					<table id="taskTable">
+						<thead>
+							<tr>
+								<th>Tarefa</th>
+								<th onclick="sortTable(1)">Prior. <i class='bx bxs-sort-alt'></i></th>
+								<th>Projeto</th>
+								<th onclick="sortTable(3)">Status <i class='bx bxs-sort-alt'></i></th>
+								<th>Respons.</th>
+								<th onclick="sortTable(5)">Deadline <i class='bx bxs-sort-alt'></i></th>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody id="taskTableBody">
+							<tr>
+								<td>Adjust concentrates to behavior and st...</td>
+								<td><span class="priority-box high">Alta</span></td>
+								<td>Gateway of Pac...</td>
+								<td><span class="status-box done">Done</span></td>							
+								<td>Miles, Esther</td>
+								<td>Wed 11 Aug</td>
+								<td>
+									<i class='bx bx-edit edit-task'></i>
+									<i class='bx bx-show-alt view-task'></i>
+									<i class='bx bx-trash delete-task'></i>
+								</td>
+							</tr>
+							<tr>
+								<td>Initiation/Planning Activities Completed</td>
+								<td><span class="priority-box medium">Média</span></td>
+								<td>Renoir Hotel Fir...</td>
+								<td><span class="status-box done">Done</span></td>
+								<td>Miles, Esther</td>
+								<td>Wed 11 Aug</td>
+								<td>
+									<i class='bx bx-edit edit-task'></i>
+									<i class='bx bx-show-alt view-task'></i>
+									<i class='bx bx-trash delete-task'></i>
+								</td>
+							</tr>
+							<tr>
+								<td>Requirements Analysis Completed</td>
+								<td><span class="priority-box low">Baixa</span></td>
+								<td>Grand Hyatt Uni...</td>
+								<td><span class="status-box todo">To do</span></td>
+								<td>Miles, Esther</td>
+								<td>Wed 11 Aug</td>
+								<td>
+									<i class='bx bx-edit edit-task'></i>
+									<i class='bx bx-show-alt view-task'></i>
+									<i class='bx bx-trash delete-task'></i>
+								</td>
+							</tr>
+							<tr>
+								<td>Security Planning</td>
+								<td><span class="priority-box high">Alta</span></td>
+								<td>801 Brannan</td>
+								<td><span class="status-box doing">Doing</span></td>
+								<td>Miles, Esther</td>
+								<td>Wed 11 Aug</td>
+								<td>
+									<i class='bx bx-edit edit-task'></i>
+									<i class='bx bx-show-alt view-task'></i>
+									<i class='bx bx-trash delete-task'></i>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- TAREFAS -->
+			 
+			<!-- MODAL -->
+			<div id="taskModal" class="modal">
+				<div class="modal-content">
+					<span id="closeModalButton" class="close">&times;</span>
+					<h2>Criar Tarefa</h2>
+					<form id="taskForm">
+						<label for="taskTitle">Título da Tarefa</label>
+						<input type="text" id="taskTitle" name="taskTitle" required>
+						<textarea id="taskDescription" name="taskDescription" rows="4" placeholder="Detalhes da Tarefa" required></textarea>
+						<div class="form-group">
+							<div class="form-group-item">
+								<input type="date" id="taskDeadline" name="taskDeadline" placeholder="Deadline">
+							</div>
+							<div class="form-group-item">
+								<select id="taskPriority" name="taskPriority" aria-label="Prioridade">
+									<option value="" disabled selected>Prioridade</option>
+									<option value="low">Baixa</option>
+									<option value="medium">Média</option>
+									<option value="high">Alta</option>
+								</select>
+							</div>
+						</div>
+						<input type="text" id="taskResp" name="taskResp" placeholder="Responsáveis" required>
+						<input type="text" id="taskProject" name="taskProject" placeholder="Projeto" required>
+
+						<div class="form-buttons">
+							<button type="button" id="cancelButton">Cancelar</button>
+							<button type="submit"><i class='bx bx-plus' ></i>&nbsp Criar Tarefa</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id="viewTaskModal" class="modal">
+				<div class="modal-content">
+					<span class="close">&times;</span>
+					<h2>Detalhes da Tarefa</h2>
+					<div id="taskDetails">
+					</div>
+				</div>
+			</div>
+			<div id="editTaskModal" class="modal">
+				<div class="modal-content">
+					<span id="closeEditModalButton" class="close">&times;</span>
+					<h2>Editar Tarefa</h2>
+					<form id="editTaskForm">
+						<label for="editTaskTitle">Título da Tarefa</label>
+						<input type="text" id="editTaskTitle" name="editTaskTitle" required>
+						<textarea id="editTaskDescription" name="editTaskDescription" rows="4" placeholder="Detalhes da Tarefa"></textarea>
+						<div class="form-group">
+							<div class="form-group-item">
+								<input type="date" id="editTaskDeadline" name="editTaskDeadline" placeholder="Prazo">
+							</div>
+							<div class="form-group-item">
+								<select id="editTaskPriority" name="editTaskPriority" aria-label="Prioridade">
+									<option value="" disabled selected>Prioridade</option>
+									<option value="low">Baixa</option>
+									<option value="medium">Média</option>
+									<option value="high">Alta</option>
+								</select>
+							</div>
+							<div class="form-group-item">
+								<select id="editTaskStatus" name="editTaskStatus" aria-label="Status">
+									<option value="" disabled selected>Status</option>
+									<option value="To do">To do</option>
+									<option value="Doing">Doing</option>
+									<option value="Done">Done</option>
+								</select>
+							</div>
+						</div>
+						<input type="text" id="editTaskResp" name="editTaskResp" placeholder="Responsáveis" required>
+						<input type="text" id="editTaskProject" name="editTaskProject" placeholder="Projeto" required>
+						<div class="form-buttons">
+							<button type="button" id="editCancelButton">Cancelar</button>
+							<button type="submit"><i class='bx bx-check'></i>&nbsp Confirmar Edição</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- MODAL -->
+
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	
+
+	<script src="script.js"></script>
+</body>
+</html>
