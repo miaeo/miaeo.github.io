@@ -120,7 +120,7 @@ function handleSubmit(event) {
         project: document.getElementById('taskProject').value
     };
 
-    fetch('http://localhost:3000/tasks', {
+    fetch('https://back-end-taskmanager.vercel.app/tasks', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -147,7 +147,7 @@ function handleSubmit(event) {
 
 // BUSCA TAREFAS NO BACKEND
 function fetchTasks() {
-    fetch('http://localhost:3000/tasks') // REQUISIÇÃO GET
+    fetch('https://back-end-taskmanager.vercel.app/tasks') // REQUISIÇÃO GET
         .then(response => response.json()) // CONVERTE A RESPOSTA EM JSON
         .then(data => {
             const taskTable = document.getElementById('taskTableBody');
@@ -289,7 +289,7 @@ function attachTaskEvents() {
             const row = this.closest('tr');
             const taskId = row.dataset.id;
 
-            fetch(`http://localhost:3000/tasks/${taskId}`, {
+            fetch(`https://back-end-taskmanager.vercel.app/tasks/${taskId}`, {
                 method: 'DELETE'
             })
             .then(response => {
